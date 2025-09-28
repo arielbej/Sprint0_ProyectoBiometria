@@ -73,6 +73,16 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(ETIQUETA_LOG, " buscarTodosLosDispositivosBTL(): empezamos a escanear ");
 
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         this.elEscanner.startScan( this.callbackDelEscaneo);
 
     } // ()
@@ -88,6 +98,16 @@ public class MainActivity extends AppCompatActivity {
         Log.d(ETIQUETA_LOG, " ****************************************************");
         Log.d(ETIQUETA_LOG, " ****** DISPOSITIVO DETECTADO BTLE ****************** ");
         Log.d(ETIQUETA_LOG, " ****************************************************");
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         Log.d(ETIQUETA_LOG, " nombre = " + bluetoothDevice.getName());
         Log.d(ETIQUETA_LOG, " toString = " + bluetoothDevice.toString());
 
@@ -165,6 +185,16 @@ public class MainActivity extends AppCompatActivity {
         //Log.d(ETIQUETA_LOG, "  buscarEsteDispositivoBTLE(): empezamos a escanear buscando: " + dispositivoBuscado
           //      + " -> " + Utilidades.stringToUUID( dispositivoBuscado ) );
 
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         this.elEscanner.startScan( this.callbackDelEscaneo );
     } // ()
 
@@ -176,6 +206,16 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         this.elEscanner.stopScan( this.callbackDelEscaneo );
         this.callbackDelEscaneo = null;
 
@@ -195,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
         //this.buscarEsteDispositivoBTLE( Utilidades.stringToUUID( "EPSG-GTI-PROY-3A" ) );
 
         //this.buscarEsteDispositivoBTLE( "EPSG-GTI-PROY-3A" );
-        this.buscarEsteDispositivoBTLE( "fistro" );
+        this.buscarEsteDispositivoBTLE( "GTI-3J" );
 
     } // ()
 
@@ -215,6 +255,16 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(ETIQUETA_LOG, " inicializarBlueTooth(): habilitamos adaptador BT ");
 
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         bta.enable();
 
         Log.d(ETIQUETA_LOG, " inicializarBlueTooth(): habilitado =  " + bta.isEnabled() );
