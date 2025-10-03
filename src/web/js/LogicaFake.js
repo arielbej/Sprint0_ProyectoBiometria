@@ -26,4 +26,3 @@ class LogicaFake {
   }
 }
 
-module.exports = LogicaFake;

@@ -4,24 +4,28 @@ import os
 import sqlite3
 
 class Logica:
-    def __init__(self):
-        db_folder = 'src/server/bbd'
-        db_path = os.path.join(db_folder, 'mediciones.db')
-        # Ensure the folder exists
-        os.makedirs(db_folder, exist_ok=True)
-        con = sqlite3.connect(db_path)
-        self.con=con
-        self.cursor=con.cursor()
+    def __init__(self,db_path="src/server/bbd/mediciones.db"):
+        # Asegura que la carpeta exista
+        self.con = sqlite3.connect(db_path)
+        self.cursor = self.con.cursor()
 
-    def insertar_medicion(self, id,medicion):
+    def insertar_medicion(self, id,id_gas,valor):
         # Inserta una nueva medicion en la base de datos.
-        self.cursor.execute("INSERT INTO mediciones (id, medicion) VALUES (?, ?)", (id, medicion))
+        self.cursor.execute("INSERT INTO mediciones (ID, ID_GAS,VALOR) VALUES (?, ?, ?)", (id,id_gas,valor))
         self.con.commit()
-        
-    def get_medicion(self,id):
-        # Obtiene una medicion de la base de datos por su id.
-        self.cursor.execute("SELECT * FROM mediciones WHERE id=?", (id,))#nota, funciona solo con tuplas(segundo parametro)
+    
+    
+    def get_ultima_medicion(self):
+        # Obtiene la última medición insertada en la tabla
+        self.cursor.execute("SELECT * FROM mediciones ORDER BY id DESC LIMIT 1")
         return self.cursor.fetchone()
+
+    
+    def get_ultimas_x_mediciones(self,cuantas):
+        # Obtiene la últimas x meddiciones de la tabla(x siendo cuantas quiero)
+        cuantas=str(cuantas)
+        self.cursor.execute(f"SELECT * FROM mediciones ORDER BY id DESC LIMIT {cuantas}")
+        return self.cursor.fetchall()
         
         
     def cerrar_conexion(self):
