@@ -22,6 +22,9 @@ logica.con.commit()
 
     
 def test_insertar_y_leer_medicion():
+    """test_insertar_y_leer_medicion
+    Inserta varias mediciones y verifica que se leen correctamente.
+    """
     logica.insertar_medicion(1, "100")  # ID será 1
     logica.insertar_medicion(3, "200")  # ID será 2
     logica.insertar_medicion(4, "300")  # ID será 3
@@ -30,12 +33,18 @@ def test_insertar_y_leer_medicion():
     assert ultima_medicion == (3, 4, "300")  # ID=3, ID_GAS=4, VALOR="300"
 
 def test_get_ultimas_x_mediciones():
+    """test_get_ultimas_x_mediciones
+    prueba la obtencion de las ultimas x mediciones.
+    """
     ultimas_mediciones = logica.get_ultimas_x_mediciones(3)
     # Las tuplas son: (ID, ID_GAS, VALOR) en orden descendente por ID
     assert ultimas_mediciones == [(3, 4, "300"), (2, 3, "200"), (1, 1, "100")]
     
     
 def test_cerrar_conexion():
+    """test_cerrar_conexion
+    Prueba que la conexion se cierra correctamente.
+    """
     logica.cerrar_conexion()
     try:
         logica.get_ultima_medicion()
