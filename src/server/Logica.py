@@ -1,6 +1,5 @@
 # Logica.py
 # Clase que define la logica de negocio de la aplicacion.
-import os
 import sqlite3
 
 class Logica:
@@ -9,9 +8,9 @@ class Logica:
         self.con = sqlite3.connect(db_path)
         self.cursor = self.con.cursor()
 
-    def insertar_medicion(self, id,id_gas,valor):
+    def insertar_medicion(self, id_gas,valor):
         # Inserta una nueva medicion en la base de datos.
-        self.cursor.execute("INSERT INTO mediciones (ID, ID_GAS,VALOR) VALUES (?, ?, ?)", (id,id_gas,valor))
+        self.cursor.execute("INSERT INTO mediciones (ID_GAS,VALOR) VALUES (?, ?)", (id_gas,valor))
         self.con.commit()
     
     
@@ -33,3 +32,14 @@ class Logica:
         self.con.close()
         
         
+def main():
+    logica=Logica()
+    logica.insertar_medicion(1,"100")
+    logica.insertar_medicion(3,"200")
+    logica.insertar_medicion(4,"300")
+    print(logica.get_ultima_medicion())
+    print(logica.get_ultimas_x_mediciones(2))
+    logica.cerrar_conexion()
+    
+if __name__ == "__main__":
+    main()
