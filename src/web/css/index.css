@@ -74,7 +74,7 @@
             text-align: center;
         }
 
-        .btn-ultima {
+        .btn {
             background: linear-gradient(135deg, #2b7de9 0%, #1e5bb8 100%);
             color: white;
             border: none;
@@ -87,7 +87,7 @@
             font-weight: 500;
         }
 
-        .btn-ultima:hover {
+        .btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 16px rgba(43, 125, 233, 0.4);
         }
