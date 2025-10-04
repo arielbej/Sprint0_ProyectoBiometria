@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from ..Logica import Logica
+from server.bbd.Logica import Logica
 
 # Inicializa la aplicacion FastAPI y la logica de negocio.
 app = FastAPI()

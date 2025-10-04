@@ -2,7 +2,7 @@ import sys
 import os
 import sqlite3
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
-from src.server.Logica import Logica
+from server.bbd.Logica import Logica
 
 """Pruebas unitarias para la clase Logica.
 Estas pruebas verifican la funcionalidad de los metodos de la clase Logica."""

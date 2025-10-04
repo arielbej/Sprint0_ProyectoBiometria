@@ -1,4 +1,4 @@
-
+import os
 import sqlite3
 
 class Logica:
@@ -9,8 +9,14 @@ class Logica:
     Args_constructor: db_path: ruta a la base de datos sqlite (por defecto "src/server/bbd/mediciones.db")
     
     """
-    def __init__(self,db_path="src/server/bbd/mediciones.db"):
-        self.con = sqlite3.connect(db_path)
+    
+    def __init__(self, db_path=None):
+        if db_path is None:
+            # DB por defecto -> siempre relativa a este archivo
+            base_dir = os.path.dirname(os.path.abspath(__file__))
+            db_path = os.path.join(base_dir, "mediciones.db")
+
+        self.con = sqlite3.connect(db_path, check_same_thread=False)
         self.cursor = self.con.cursor()
 
     def insertar_medicion(self, id_gas,valor):
