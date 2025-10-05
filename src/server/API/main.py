@@ -1,13 +1,22 @@
 from fastapi import FastAPI
 from server.bbd.Logica import Logica
+from pydantic import BaseModel
+
 
 # Inicializa la aplicacion FastAPI y la logica de negocio.
 app = FastAPI()
 logica = Logica()
 
+class Medicion(BaseModel):
+    # usamos basemodel para que en el request se valide como json.
+    # De la manera anterior (id_gas:int, valor:str) habria que mandar todo como query.
+    #Entonces FastAPI espera que esos parámetros se pasen como query parameters o form-data, no como JSON en el body.
+    id_gas: int
+    valor: str
+
 # TELEFONO --> API --> LOGICA --> BBD
 @app.post("/mediciones")
-def insertar_medicion(id_gas: int, valor: str):
+def insertar_medicion(medicion: Medicion):
     """insertar_medicion
     Endpoint para insertar una medicion en la base de datos.
     
@@ -18,7 +27,7 @@ def insertar_medicion(id_gas: int, valor: str):
     Returns:
         dict: diccionario con el mensaje de exito.
     """
-    logica.insertar_medicion(id_gas,valor)
+    logica.insertar_medicion(medicion.id_gas, medicion.valor)
     return {"mensaje": "Medicion insertada correctamente"}
 
 # GET → obtener la última medición
