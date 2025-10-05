@@ -12,7 +12,6 @@ import android.bluetooth.le.ScanFilter;
 import android.bluetooth.le.ScanResult;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.ParcelUuid;
 import android.util.Log;
 import android.view.View;
 
@@ -21,7 +20,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import java.util.List;
-import java.util.UUID;
+import java.util.Objects;
 
 // ------------------------------------------------------------------
 // ------------------------------------------------------------------
@@ -39,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     private BluetoothLeScanner elEscanner;
 
     private ScanCallback callbackDelEscaneo = null;
+
+    private TramaIBeacon ultimaTramaRecibida=null;
 
     // --------------------------------------------------------------
     // --------------------------------------------------------------
@@ -98,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(ETIQUETA_LOG, " ****************************************************");
         Log.d(ETIQUETA_LOG, " ****** DISPOSITIVO DETECTADO BTLE ****************** ");
         Log.d(ETIQUETA_LOG, " ****************************************************");
-        if (ActivityCompat.checkSelfPermission(this.peekAvailableContext(), Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(this.peekAvailableContext()), Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
@@ -142,6 +143,8 @@ public class MainActivity extends AppCompatActivity {
                 + Utilidades.bytesToInt(tib.getMinor()) + " ) ");
         Log.d(ETIQUETA_LOG, " txPower  = " + Integer.toHexString(tib.getTxPower()) + " ( " + tib.getTxPower() + " )");
         Log.d(ETIQUETA_LOG, " ****************************************************");
+
+        this.ultimaTramaRecibida=tib;
 
     } // ()
 
@@ -238,6 +241,29 @@ public class MainActivity extends AppCompatActivity {
         this.buscarEsteDispositivoBTLE( "GTI-3J" );
 
     } // ()
+
+
+    public void guardarMedicion(View v) {
+        try {
+            if (ultimaTramaRecibida == null) {
+                Log.e(ETIQUETA_LOG, "No hay ninguna trama iBeacon recibida todavía.");
+                return;
+            }
+
+            // Extraer ID de gas y medida desde la trama
+            int id_gas = Utilidades.bytesToInt(ultimaTramaRecibida.getMajor());
+            int medida = Utilidades.bytesToInt(ultimaTramaRecibida.getMinor());
+
+            Log.d(ETIQUETA_LOG, "Guardando medición: id_gas = " + id_gas + ", medida = " + medida);
+
+            LogicaFake logica = new LogicaFake("http://127.0.0.1:5000");
+            logica.insertarMedicion(id_gas, medida);
+
+        } catch (Exception e) {
+            Log.e("ERROR", "Error al insertar medición", e);
+        }
+    }
+
 
     // --------------------------------------------------------------
     // --------------------------------------------------------------
