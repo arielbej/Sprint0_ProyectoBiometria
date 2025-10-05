@@ -18,7 +18,8 @@ public class LogicaFake {
         this.baseUrl = baseUrl; // ej: "http://127.0.0.1:5000"
     }
 
-    public void insertarMedicion(int id, int medicion)throws Exception {
+    public void insertarMedicion(int id, int medicion) throws Exception {
+
         URL url = new URL(baseUrl + "/insertar");
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("POST");
@@ -45,40 +46,6 @@ public class LogicaFake {
         }
 
     }
-
-    // Simula GET -> pedir la medición más reciente
-    public String getMedicion(int id) throws Exception {
-        URL url = new URL(baseUrl + "/get/" + id);
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("GET");
-
-        try (BufferedReader br = new BufferedReader(
-                new InputStreamReader(con.getInputStream(), "utf-8"))) {
-            StringBuilder response = new StringBuilder();
-            String responseLine;
-            while ((responseLine = br.readLine()) != null) {
-                response.append(responseLine.trim());
-            }
-            return response.toString();
-        }
-    }
-
-    // Simula GET -> obtener la última medición
-    public String getUltimaMedicion() throws Exception {
-        URL url = new URL(baseUrl + "/ultima");
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("GET");
-
-        try (BufferedReader br = new BufferedReader(
-                new InputStreamReader(con.getInputStream(), "utf-8"))) {
-            StringBuilder response = new StringBuilder();
-            String responseLine;
-            while ((responseLine = br.readLine()) != null) {
-                response.append(responseLine.trim());
-            }
-            return response.toString();
-        }
-    }
-
 }
+
 
