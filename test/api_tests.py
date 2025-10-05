@@ -15,8 +15,8 @@ def test_insertar_medicion_con_post():
     - Verifica que los datos coincidan.
     """
     dato_test = {
-        "id_gas": 1,
-        "valor": "{\"temperatura\": 25, \"nivel_gas\": 30}"
+        "id_sensor": 11,
+        "valor_contador": 4
     }
     
     response_post = client.post("/mediciones", json=dato_test)
@@ -33,8 +33,8 @@ def test_get_ultima_medicion():
 
     data = response_get.json()
     assert "id" in data
-    assert data["id_gas"] == 1
-    assert "valor" in data
+    assert data["id_sensor"] == 11
+    assert "valor_contador" in data
     
 
 def test_get_ultimas_mediciones():

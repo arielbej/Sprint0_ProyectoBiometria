@@ -19,14 +19,14 @@ class Logica:
         self.con = sqlite3.connect(db_path, check_same_thread=False)
         self.cursor = self.con.cursor()
 
-    def insertar_medicion(self, id_gas,valor):
+    def insertar_medicion(self, id_sensor,valor_contador):
         """insertar_medicion
         Inserta una medicion en la tabla mediciones.
         Args:
-            id_gas (int): numero id del gas.
-            valor (string): el valor de la medidada en formato json({"temperatura":35,"nivel_gas":30%} por ejemplo).
+            id_sensor (int): numero id del sensor.
+            valor_contador(int): contador del del sensor.
         """
-        self.cursor.execute("INSERT INTO mediciones (ID_GAS,VALOR) VALUES (?, ?)", (id_gas,valor))
+        self.cursor.execute("INSERT INTO mediciones (ID_SENSOR,VALOR_CONTADOR) VALUES (?, ?)", (id_sensor,valor_contador))
         self.con.commit()
     
     
@@ -35,7 +35,7 @@ class Logica:
         Obtiene la ultima medicion de la tabla mediciones.
 
         Devuelve:
-            tuple: tupla con la ultima medicion (ID, ID_GAS, VALOR)
+            tuple: tupla con la ultima medicion (ID, ID_SENSOR,VALOR_CONTADOR)
         """
         self.cursor.execute("SELECT * FROM mediciones ORDER BY id DESC LIMIT 1")
         return self.cursor.fetchone()
@@ -49,7 +49,7 @@ class Logica:
             cuantas (int): numero de mediciones a obtener.
 
         Devuelve:
-            list: lista de tuplas con las ultimas x mediciones (ID, ID_GAS, VALOR)
+            list: lista de tuplas con las ultimas x mediciones (ID, ID_SENSOR,VALOR_CONTADOR)
         """
         cuantas=str(cuantas)
         self.cursor.execute(f"SELECT * FROM mediciones ORDER BY id DESC LIMIT {cuantas}")

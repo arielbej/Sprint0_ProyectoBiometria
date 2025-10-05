@@ -251,13 +251,13 @@ public class MainActivity extends AppCompatActivity {
             }
 
             // Extraer ID de gas y medida desde la trama
-            int id_gas = Utilidades.bytesToInt(ultimaTramaRecibida.getMajor());
-            int medida = Utilidades.bytesToInt(ultimaTramaRecibida.getMinor());
+            int id_sensor = Utilidades.bytesToInt(ultimaTramaRecibida.getMajor());
+            int valor_contador = Utilidades.bytesToInt(ultimaTramaRecibida.getMinor());
 
-            Log.d(ETIQUETA_LOG, "Guardando medición: id_gas = " + id_gas + ", medida = " + medida);
+            Log.d(ETIQUETA_LOG, "Guardando medición: id_sensor = " + id_sensor + ", medida = " + valor_contador);
 
             LogicaFake logica = new LogicaFake("http://127.0.0.1:5000");
-            logica.insertarMedicion(id_gas, medida);
+            logica.insertarMedicion(id_sensor, valor_contador);
 
         } catch (Exception e) {
             Log.e("ERROR", "Error al insertar medición", e);
