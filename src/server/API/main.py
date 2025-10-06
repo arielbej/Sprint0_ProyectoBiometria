@@ -1,8 +1,11 @@
 from fastapi import FastAPI
 from server.bbd.Logica import Logica
 from pydantic import BaseModel
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
+import os
 
-
+#-----------API------------#
 # Inicializa la aplicacion FastAPI y la logica de negocio.
 app = FastAPI()
 logica = Logica()
@@ -44,3 +47,27 @@ def ultimas(cuantas: int):
     if mediciones:
         return {"mediciones": [{"id": m[0], "id_sensor": m[1], "valor_contador": m[2]} for m in mediciones]}
     return {"mensaje": "No hay mediciones"}
+
+#-----------------------------------------------------------------------------API-----------------------------------------------------------------------------
+
+
+
+#---------------------------------------------------------------------------------------WEB-----------------------------------------------------------------------------#
+# Ruta absoluta de la carpeta 'web'
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+WEB_DIR = os.path.join(BASE_DIR, "web")
+INDEX_FILE = os.path.join(WEB_DIR, "index.html")    
+
+# Montar los archivos estáticos (css, js, etc.)
+app.mount("/static", StaticFiles(directory=WEB_DIR), name="static")
+
+@app.get("/")
+def read_index():
+    """read_index
+    Endpoint para servir el archivo index.html.
+    
+    Returns:
+        FileResponse: respuesta con el archivo index.html.
+    """
+    return FileResponse(INDEX_FILE)
+#---------------------------------------------------------------------------------------WEB-----------------------------------------------------------------------------#

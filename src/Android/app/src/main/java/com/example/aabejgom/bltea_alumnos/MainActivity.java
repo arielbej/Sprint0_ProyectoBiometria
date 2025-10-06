@@ -254,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
             int id_sensor = Utilidades.bytesToInt(ultimaTramaRecibida.getMajor());
             int valor_contador = Utilidades.bytesToInt(ultimaTramaRecibida.getMinor());
 
-            Log.d(ETIQUETA_LOG, "Guardando medición: id_sensor = " + id_sensor + ", medida = " + valor_contador);
+            Log.d(ETIQUETA_LOG, "Guardando medición: id_sensor = " + id_sensor + ", valor_contador = " + valor_contador);
 
             LogicaFake logica = new LogicaFake("http://127.0.0.1:5000");
             logica.insertarMedicion(id_sensor, valor_contador);
