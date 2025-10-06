@@ -23,8 +23,8 @@ async function cargarMediciones(ultimas_mediciones) {
 
         fila.innerHTML = `
           <td>${medicion.id}</td>
-          <td>${medicion.id_gas}</td>
-          <td>${medicion.valor}</td>
+          <td>${medicion.id_sensor}</td>
+          <td>${medicion.valor_contador}</td>
         `;
 
         tbody.appendChild(fila);
