@@ -22,7 +22,7 @@ public class LogicaFake {
 
     public void insertarMedicion(int id_sensor, int valor_contador) throws Exception {
 
-        URL url = new URL(baseUrl + "/mediciones");
+        URL url = new URL(baseUrl + "mediciones");
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("POST");
         con.setRequestProperty("Content-Type", "application/json; utf-8");

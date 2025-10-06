@@ -238,7 +238,7 @@ public class MainActivity extends AppCompatActivity {
         //this.buscarEsteDispositivoBTLE( Utilidades.stringToUUID( "EPSG-GTI-PROY-3A" ) );
 
         //this.buscarEsteDispositivoBTLE( "EPSG-GTI-PROY-3A" );
-        this.buscarEsteDispositivoBTLE( "GTI-3J" );
+        this.buscarEsteDispositivoBTLE( "ARIEL" );
 
     } // ()
 
@@ -250,19 +250,25 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
-            // Extraer ID de gas y medida desde la trama
             int id_sensor = Utilidades.bytesToInt(ultimaTramaRecibida.getMajor());
             int valor_contador = Utilidades.bytesToInt(ultimaTramaRecibida.getMinor());
 
             Log.d(ETIQUETA_LOG, "Guardando medición: id_sensor = " + id_sensor + ", valor_contador = " + valor_contador);
 
-            LogicaFake logica = new LogicaFake("http://127.0.0.1:5000");
-            logica.insertarMedicion(id_sensor, valor_contador);
+            new Thread(() -> {
+                try {
+                    LogicaFake logica = new LogicaFake("http://192.168.18.199:8000/");
+                    logica.insertarMedicion(id_sensor, valor_contador);
+                } catch (Exception e) {
+                    Log.e("ERROR", "Error al insertar medición", e);
+                }
+            }).start();
 
         } catch (Exception e) {
-            Log.e("ERROR", "Error al insertar medición", e);
+            Log.e("ERROR", "Error general en guardarMedicion", e);
         }
     }
+
 
 
     // --------------------------------------------------------------
