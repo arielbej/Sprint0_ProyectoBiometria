@@ -10,6 +10,7 @@ import android.bluetooth.le.BluetoothLeScanner;
 import android.bluetooth.le.ScanCallback;
 import android.bluetooth.le.ScanFilter;
 import android.bluetooth.le.ScanResult;
+import android.bluetooth.le.ScanSettings;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -244,16 +245,36 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void guardarMedicion(View v) {
+
+        String guardar_log= "GUARDAR_MEDICION";
         try {
             if (ultimaTramaRecibida == null) {
-                Log.e(ETIQUETA_LOG, "No hay ninguna trama iBeacon recibida todavía.");
+                Log.e(guardar_log, "No hay ninguna trama iBeacon recibida todavía.");
                 return;
             }
 
-            int id_sensor = Utilidades.bytesToInt(ultimaTramaRecibida.getMajor());
-            int valor_contador = Utilidades.bytesToInt(ultimaTramaRecibida.getMinor());
+            // Usar el nuevo método sin signo
+            int major_completo = Utilidades.bytesToInt(ultimaTramaRecibida.getMajor());
+            int minor_completo = Utilidades.bytesToInt(ultimaTramaRecibida.getMinor());
 
-            Log.d(ETIQUETA_LOG, "Guardando medición: id_sensor = " + id_sensor + ", valor_contador = " + valor_contador);
+            // Extraer el tipo de medición (byte alto del major)
+            int tipo_medicion = (major_completo >> 8) & 0xFF;
+
+            // Extraer el contador (byte bajo del major)
+            int contador = major_completo & 0xFF;
+
+            // El valor está en el minor
+            int valor_contador = minor_completo;
+
+            Log.d(guardar_log, "===========================================");
+            Log.d(guardar_log, "Major completo: " + major_completo + " (0x" + Integer.toHexString(major_completo) + ")");
+            Log.d(guardar_log, "Tipo de medición: " + tipo_medicion + " (esperado: 11=CO2, 12=TEMP)");
+            Log.d(guardar_log, "Contador: " + contador);
+            Log.d(guardar_log, "Minor (valor): " + valor_contador);
+            Log.d(guardar_log, "===========================================");
+
+            // Guardar usando el tipo de medición como id_sensor
+            int id_sensor = tipo_medicion;
 
             new Thread(() -> {
                 try {
