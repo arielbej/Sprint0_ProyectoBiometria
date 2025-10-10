@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="/static/css/index.css">
     <title>Proyecto Biometría_AB</title>
 </head>
 <body>
@@ -17,23 +17,18 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>GAS</th>
-                        <th>VALOR</th>
+                        <th>ID_SENSOR</th>
+                        <th>VALOR_CONTADOR</th>
                     </tr>
                 </thead>
                 <tbody id="tableBody">
-                    <tr class="data-row">
-                        <td>1</td>
-                        <td>CO2</td>
-                        <td>{Temp: 18C , Nivel de Gas: 12%}</td>
-                    </tr>
+                    <!-- Las filas de la tabla se llenarán dinámicamente con JavaScript -->
                 </tbody>
             </table>
         </div>
-        <div class="button-container">
-            <button class="btn">Ultima Medida</button>
-        </div>
         <!--Habria un boton de conseguir x ultimas medidas pero lo pondre automatico
         ya que es una demo simple-->
+        <script type="module" src="/static/js/app.js"></script>
+
 </body>
 </html>
