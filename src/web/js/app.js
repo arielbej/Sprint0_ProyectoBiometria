@@ -4,8 +4,8 @@
  *******************************************/
 
 import { LogicaFake } from "./LogicaFake.js";
-
-const logica = new LogicaFake("http://192.168.18.199:8000");
+const API_URL = "http://192.168.18.199:8000"
+const logica = new LogicaFake(API_URL);
 
 // Z ---> cargarMediciones()
 // Esta función obtiene las últimas mediciones desde el backend y las muestra en la tabla HTML
