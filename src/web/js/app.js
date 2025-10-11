@@ -24,7 +24,8 @@ async function cargarMediciones(ultimas_mediciones) {
         fila.innerHTML = `
           <td>${medicion.id}</td>
           <td>${medicion.id_sensor}</td>
-          <td>${medicion.valor_contador}</td>
+          <td>${medicion.valor_medida}</td>
+          <td>${medicion.contador}</td>
         `;
 
         tbody.appendChild(fila);
@@ -37,4 +38,7 @@ async function cargarMediciones(ultimas_mediciones) {
   }
 }
 // Llama la función al cargar la página
-window.onload = cargarMediciones(3); // Cargar las últimas 10 mediciones
+document.addEventListener("DOMContentLoaded", () => {
+  cargarMediciones(3);
+});
+

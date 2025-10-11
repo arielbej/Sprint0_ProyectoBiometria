@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private ScanCallback callbackDelEscaneo = null;
 
     private TramaIBeacon ultimaTramaRecibida=null;
+    private static final String URL_API="http://192.168.18.199:8000";
 
     // --------------------------------------------------------------
     // --------------------------------------------------------------
@@ -289,13 +290,13 @@ public class MainActivity extends AppCompatActivity {
             int contador = major & 0xFF;
 
             // El valor está en el minor
-            int valor_contador = minor;
+            int valor_medicicion = minor;
 
             Log.d(guardar_log, "===========================================");
             Log.d(guardar_log, "Major completo: " + major + " (0x" + Integer.toHexString(major) + ")");
             Log.d(guardar_log, "Tipo de medición: " + id_medicion + " (esperado: 11=CO2, 12=TEMP)");
             Log.d(guardar_log, "Contador: " + contador);
-            Log.d(guardar_log, "Minor (valor): " + valor_contador);
+            Log.d(guardar_log, "Minor (valor): " + valor_medicicion);
             Log.d(guardar_log, "===========================================");
 
             // Guardar usando el tipo de medición como id_sensor
@@ -303,8 +304,8 @@ public class MainActivity extends AppCompatActivity {
 
             new Thread(() -> {
                 try {
-                    LogicaFake logica = new LogicaFake("http://192.168.18.199:8000/");
-                    logica.insertarMedicion(id_sensor, valor_contador);
+                    LogicaFake logica = new LogicaFake(URL_API);
+                    logica.insertarMedicion(id_sensor, valor_medicicion ,contador);
                 } catch (Exception e) {
                     Log.e("ERROR", "Error al insertar medición", e);
                 }

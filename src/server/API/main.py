@@ -5,7 +5,7 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 import os
 
-#-----------API------------#
+#-----------------------------------------------------------------------------API-----------------------------------------------------------------------------
 # Inicializa la aplicacion FastAPI y la logica de negocio.
 app = FastAPI()
 logica = Logica()
@@ -15,7 +15,8 @@ class Medicion(BaseModel):
     # De la manera anterior (id_gas:int, valor:str) habria que mandar todo como query.
     #Entonces FastAPI espera que esos parámetros se pasen como query parameters o form-data, no como JSON en el body.
     id_sensor: int
-    valor_medida: float
+    valor_medida: int
+    
     contador: int
 
 # TELEFONO --> API --> LOGICA --> BBD
