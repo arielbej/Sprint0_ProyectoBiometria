@@ -1,11 +1,20 @@
 /********************************************
- * @file app.js
+ * @file mediciones.js
  * @brief Script que carga las últimas mediciones y las muestra en la tabla HTML
  *******************************************/
 
 import { LogicaFake } from "./LogicaFake.js";
 const API_URL = "http://192.168.18.199:8000"
 const logica = new LogicaFake(API_URL);
+
+// Convierte el id del sensor a texto para mejor legibilidad
+// Z(id) --> id_to_str--> str
+function id_to_str(id) {
+  if (id==11){return "CO2";}
+  if (id==12){return "Temperatura";}
+  if (id==13){return "Ruido";}
+  return "Desconocido";
+}
 
 // Z ---> cargarMediciones()
 // Esta función obtiene las últimas mediciones desde el backend y las muestra en la tabla HTML
@@ -23,7 +32,7 @@ async function cargarMediciones(ultimas_mediciones) {
 
         fila.innerHTML = `
           <td>${medicion.id}</td>
-          <td>${medicion.id_sensor}</td>
+          <td>${id_to_str(medicion.id_sensor)}</td>
           <td>${medicion.valor_medida}</td>
           <td>${medicion.contador}</td>
         `;

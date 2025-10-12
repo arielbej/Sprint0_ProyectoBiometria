@@ -24,11 +24,12 @@ public class LogicaFake {
     /********************************************
      * @function insertarMedicion
      * @brief funcion que inserta la medicion a la bbd usando POST a la API.
-     * Z,R,Z---> insertarMedicion()
+     * Z,Z,Z---> insertarMedicion()
      *******************************************/
 
     public void insertarMedicion(int id_sensor,int valor_medida, int contador) throws Exception {
 
+        //peticion a api.
         URL url = new URL(baseUrl + "/mediciones");
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("POST");

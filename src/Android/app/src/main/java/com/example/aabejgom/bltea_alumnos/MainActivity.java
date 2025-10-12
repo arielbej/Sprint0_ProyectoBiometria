@@ -47,6 +47,12 @@ public class MainActivity extends AppCompatActivity {
 
     // --------------------------------------------------------------
     // --------------------------------------------------------------
+
+    // ------------------------------------------------------------------
+    /**
+     * Inicia un escaneo Bluetooth LE sin filtros.
+     * Busca todos los dispositivos BTLE disponibles cercanos.
+     */
     private void buscarTodosLosDispositivosBTLE() {
         Log.d(ETIQUETA_LOG, " buscarTodosLosDispositivosBTL(): empieza ");
 
@@ -79,13 +85,6 @@ public class MainActivity extends AppCompatActivity {
         Log.d(ETIQUETA_LOG, " buscarTodosLosDispositivosBTL(): empezamos a escanear ");
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
         this.elEscanner.startScan( this.callbackDelEscaneo);
@@ -94,6 +93,13 @@ public class MainActivity extends AppCompatActivity {
 
     // --------------------------------------------------------------
     // --------------------------------------------------------------
+    // ------------------------------------------------------------------
+    /**
+     * Muestra por log toda la información relevante de un dispositivo BTLE detectado.
+     * Extrae la trama iBeacon y guarda la última recibida.
+     *
+     * @param resultado resultado del escaneo con los datos del dispositivo detectado
+     */
     private void mostrarInformacionDispositivoBTLE( ScanResult resultado ) {
 
         BluetoothDevice bluetoothDevice = resultado.getDevice();
@@ -144,10 +150,17 @@ public class MainActivity extends AppCompatActivity {
 
     // --------------------------------------------------------------
     // --------------------------------------------------------------
+    // ------------------------------------------------------------------
+    /**
+     * Busca un dispositivo BTLE específico por su nombre.
+     * Configura filtros y permisos según la versión de Android.
+     *
+     * @param dispositivoBuscado nombre del dispositivo a localizar
+     */
     private void buscarEsteDispositivoBTLE(final String dispositivoBuscado) {
         Log.d(ETIQUETA_LOG, "buscarEsteDispositivoBTLE(): empieza");
 
-        // ✅ 1. Verificar permisos antes de escanear
+        //  Verificar permisos antes de escanear
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED ||
                     ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED ||
@@ -169,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
         } else {
-            // ✅ Android 11 o menor
+
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
                     ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
@@ -187,12 +200,12 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        // ✅ 2. Detener escaneo previo si ya había uno activo
+        // Detener escaneo previo si ya había uno activo
         detenerBusquedaDispositivosBTLE();
 
         Log.d(ETIQUETA_LOG, "buscarEsteDispositivoBTLE(): instalamos scan callback");
 
-        // ✅ 3. Configurar callback del escaneo
+        //  Configurar callback del escaneo
         this.callbackDelEscaneo = new ScanCallback() {
             @Override
             public void onScanResult(int callbackType, ScanResult resultado) {
@@ -215,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        // ✅ 4. Crear filtro para el nombre del dispositivo buscado
+        // Crear filtro para el nombre del dispositivo buscado
         ScanFilter filtro = new ScanFilter.Builder()
                 .setDeviceName(dispositivoBuscado)
                 .build();
@@ -223,12 +236,12 @@ public class MainActivity extends AppCompatActivity {
         List<ScanFilter> filtros = new ArrayList<>();
         filtros.add(filtro);
 
-        // ✅ 5. Configurar el modo de escaneo
+        // Configurar el modo de escaneo
         ScanSettings settings = new ScanSettings.Builder()
                 .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
                 .build();
 
-        // ✅ 6. Iniciar escaneo
+        // Iniciar escaneo
         Log.d(ETIQUETA_LOG, "buscarEsteDispositivoBTLE(): empezamos a escanear buscando: " + dispositivoBuscado);
         elEscanner.startScan(filtros, settings, callbackDelEscaneo);
     }
@@ -237,6 +250,10 @@ public class MainActivity extends AppCompatActivity {
 
     // --------------------------------------------------------------
     // --------------------------------------------------------------
+    // ------------------------------------------------------------------
+    /**
+     * Detiene el escaneo Bluetooth LE si está activo.
+     */
     private void detenerBusquedaDispositivosBTLE() {
 
         if ( this.callbackDelEscaneo == null ) {
@@ -253,6 +270,11 @@ public class MainActivity extends AppCompatActivity {
 
     // --------------------------------------------------------------
     // --------------------------------------------------------------
+    // ------------------------------------------------------------------
+    /**
+     * Método asociado al botón "Buscar dispositivos BTLE".
+     * Llama al escaneo general sin filtros.
+     */
     public void botonBuscarDispositivosBTLEPulsado( View v ) {
         Log.d(ETIQUETA_LOG, " boton buscar dispositivos BTLE Pulsado" );
         this.buscarTodosLosDispositivosBTLE();
@@ -260,6 +282,11 @@ public class MainActivity extends AppCompatActivity {
 
     // --------------------------------------------------------------
     // --------------------------------------------------------------
+
+    /**
+     * Método asociado al botón "Buscar nuestro dispositivo BTLE".
+     * Llama a la búsqueda filtrada por nombre ("ARIEL").
+     */
     public void botonBuscarNuestroDispositivoBTLEPulsado( View v ) {
         Log.d(ETIQUETA_LOG, " boton nuestro dispositivo BTLE Pulsado" );
         //this.buscarEsteDispositivoBTLE( Utilidades.stringToUUID( "EPSG-GTI-PROY-3A" ) );
@@ -269,7 +296,10 @@ public class MainActivity extends AppCompatActivity {
 
     } // ()
 
-
+    /**
+     * Procesa la última trama iBeacon recibida, extrae los datos de medición
+     * y los envía al servidor mediante la clase LogicaFake.
+     */
     public void guardarMedicion(View v) {
 
         String guardar_log= "GUARDAR_MEDICION";
@@ -320,6 +350,11 @@ public class MainActivity extends AppCompatActivity {
 
     // --------------------------------------------------------------
     // --------------------------------------------------------------
+    // ------------------------------------------------------------------
+    /**
+     * Método asociado al botón "Detener búsqueda".
+     * Interrumpe el escaneo de dispositivos BTLE.
+     */
     public void botonDetenerBusquedaDispositivosBTLEPulsado( View v ) {
         Log.d(ETIQUETA_LOG, " boton detener busqueda dispositivos BTLE Pulsado" );
         this.detenerBusquedaDispositivosBTLE();
@@ -327,6 +362,10 @@ public class MainActivity extends AppCompatActivity {
 
     // --------------------------------------------------------------
     // --------------------------------------------------------------
+    /**
+     * Inicializa el adaptador Bluetooth y solicita permisos si es necesario.
+     * Prepara el escáner BTLE para posteriores búsquedas.
+     */
     private void inicializarBlueTooth() {
         Log.d(ETIQUETA_LOG, " inicializarBlueTooth(): obtenemos adaptador BT ");
 
@@ -374,6 +413,11 @@ public class MainActivity extends AppCompatActivity {
 
     // --------------------------------------------------------------
     // --------------------------------------------------------------
+    // ------------------------------------------------------------------
+    /**
+     * Método del ciclo de vida de Android.
+     * Se ejecuta al crear la actividad e inicializa el Bluetooth.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -389,6 +433,10 @@ public class MainActivity extends AppCompatActivity {
 
     // --------------------------------------------------------------
     // --------------------------------------------------------------
+    /**
+     * Callback que gestiona el resultado de las solicitudes de permisos.
+     * Si se conceden, reinicia la búsqueda del dispositivo BTLE.
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
