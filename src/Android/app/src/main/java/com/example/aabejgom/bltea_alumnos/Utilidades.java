@@ -6,8 +6,11 @@ import java.nio.ByteBuffer;
 import java.util.UUID;
 
 // -----------------------------------------------------------------------------------
+// @file: Utilidades
 // @author: Jordi Bataller i Mascarell
+// @brief: clase que nos da los necesarios para manejar la trama Ibeacon
 // -----------------------------------------------------------------------------------
+
 public class Utilidades {
 
     // -------------------------------------------------------------------------------

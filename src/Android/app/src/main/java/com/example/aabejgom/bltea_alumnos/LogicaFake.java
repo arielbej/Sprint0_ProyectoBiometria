@@ -20,16 +20,26 @@ public class LogicaFake {
         this.baseUrl = baseUrl; // ej: "http://127.0.0.1:5000"
     }
 
-    public void insertarMedicion(int id_sensor, int valor_contador) throws Exception {
 
-        URL url = new URL(baseUrl + "mediciones");
+    /********************************************
+     * @function insertarMedicion
+     * @brief funcion que inserta la medicion a la bbd usando POST a la API.
+     * Z,Z,Z---> insertarMedicion()
+     *******************************************/
+
+    public void insertarMedicion(int id_sensor,int valor_medida, int contador) throws Exception {
+
+        //peticion a api.
+        URL url = new URL(baseUrl + "/mediciones");
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("POST");
         con.setRequestProperty("Content-Type", "application/json; utf-8");
         con.setDoOutput(true);
 
         // JSON que mandamos a la API
-        String jsonInput = "{ \"id_sensor\": " + id_sensor + ", \"valor_contador\": " + valor_contador + " }";
+        String jsonInput = "{ \"id_sensor\": " + id_sensor +
+                ", \"valor_medida\": " + valor_medida +
+                ", \"contador\": " + contador + " }";
 
         try (OutputStream os = con.getOutputStream()) {
             byte[] input = jsonInput.getBytes(StandardCharsets.UTF_8);

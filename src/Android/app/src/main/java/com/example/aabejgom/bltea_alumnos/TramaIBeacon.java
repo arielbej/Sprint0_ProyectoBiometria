@@ -4,7 +4,9 @@ package com.example.aabejgom.bltea_alumnos;
 import java.util.Arrays;
 
 // -----------------------------------------------------------------------------------
+// @file: TramaIbeacon
 // @author: Jordi Bataller i Mascarell
+// @brief:POJO que representa una tramaIbeacon.
 // -----------------------------------------------------------------------------------
 public class TramaIBeacon {
     private byte[] prefijo = null; // 9 bytes
