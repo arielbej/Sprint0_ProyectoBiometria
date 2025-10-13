@@ -1,14 +1,14 @@
 # Sprint 0 Proyecto Biometria y Medio Ambiente
----
+
 Repositorio correspondiente al Sprint 0 del proyecto de Biometría y Medio Ambiente.
 Este proyecto integra sensores BLE (beacons), una aplicación Android, una API REST con base de datos y una interfaz web para visualizar las mediciones  recogidas.
 
 # Arquitectura del Proyecto 
----
-![image](doc\arquitectura_proyecto.png)
+
+![Arquitectura del Proyecto](doc/arquitectura_proyecto.png)
 
 # Tecnologias utilizadas y Dependencias
----
+
 * Arduino (C++)
 * Android Studio (Java)
 * Python
@@ -22,7 +22,7 @@ Este proyecto integra sensores BLE (beacons), una aplicación Android, una API R
 * SQL
 
 ## Dependencias Python
----
+
 Aparte de tener el resto de tecnologias utlizadas, para la API y los tests es necesario tener instalado las librerias de Python mencionados anteriormente. Lo siguiente es un comando para instalarlas
 ```
 
@@ -35,7 +35,7 @@ pip install pytest
 
 
 # Estructura de Carpetas del Repositorio
----
+
 ```
 Sprint0_ProyectoBiometria
 |
@@ -56,12 +56,17 @@ Sprint0_ProyectoBiometria
 ```
 
 # ¿Como Ejecutar Este Repositiorio?
----
 
 Para probar  esta repo debe hacer lo siguiente:
 1. **Levantar el Servidor (API y WEB)**
-> Warning
-> El servidor esta hosteado localmente, asi que es importante que sepa su ip local para acceder a la web. Si no sabe cual es su ip local, puede ejecutar en la terminal **ipconfig**. Tambien tendra que cambiar las URLs de la API en el codigo de la js de la web y en el codigo java de la app android.
+> ⚠️ **Advertencia**
+> El servidor está hosteado localmente, así que es importante que sepa su IP local para acceder a la web.  
+> Si no sabe cuál es su IP local, puede ejecutar en la terminal:  
+> ```bash
+> ipconfig
+> ```
+> Además, recuerde cambiar las URLs de la API en el código JavaScript de la web y en el código Java de la app Android.
+
 
 Este es el primer paso para que la app pueda guardar le medición sin problema. Para levantar el server ejecute lo siguiente:
 ```
