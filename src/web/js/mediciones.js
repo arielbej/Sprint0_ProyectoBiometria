@@ -5,7 +5,9 @@
 
 import { LogicaFake } from "./LogicaFake.js";
 const API_URL = "http://192.168.18.199:8000"
-const logica = new LogicaFake(API_URL);
+const API_URL_UPV= "http://10.236.13.118:8000"
+const API_DATA_TELEFONO="http://10.217.131.125:8000"
+const logica = new LogicaFake(API_DATA_TELEFONO);
 
 // Convierte el id del sensor a texto para mejor legibilidad
 // Z(id) --> id_to_str--> str

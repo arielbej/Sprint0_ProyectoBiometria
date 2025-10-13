@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TramaIBeacon ultimaTramaRecibida=null;
     private static final String URL_API="http://192.168.18.199:8000";
+    private static final String URL_API_DATA="http://10.217.131.125:8000";
 
     // --------------------------------------------------------------
     // --------------------------------------------------------------
@@ -309,7 +310,6 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
-            // Usar el nuevo método sin signo
             int major = Utilidades.bytesToInt(ultimaTramaRecibida.getMajor());
             int minor = Utilidades.bytesToInt(ultimaTramaRecibida.getMinor());
 
