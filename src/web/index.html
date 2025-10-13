@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/index.css">
+    <title>Proyecto Biometría_AB</title>
+</head>
+<body>
+    <div class="header">
+        <h1>Proyecto Biometría-Sprint0</h1>
+    </div>
+    <div class="container">
+        <h1>Las Ultimas Medidas Tomadas</h1>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>SENSOR</th>
+                        <th>VALOR_MEDIDA</th>
+                        <th>CONTADOR</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Las filas de la tabla se llenarán dinámicamente con JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        <!--Habria un boton de conseguir x ultimas medidas pero lo pondre automatico
+        ya que es una demo simple-->
+        <script type="module" src="/static/js/mediciones.js"></script>
+
+</body>
+</html>
